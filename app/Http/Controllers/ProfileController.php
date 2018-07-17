@@ -106,5 +106,16 @@ class ProfileController extends Controller
             return response()->json(['status' => 'ok'], 200);
         }
     }
+
+    public function emailExists(Request $request)
+    {
+        $email = filter_var($request->email, FILTER_SANITIZE_STRING);
+        $userFound = User::where('email', $email)->count() > 0;
+
+        return response()->json([
+            'responseCode' => 1,
+            'responseContent' => $userFound,
+        ]);
+    }
   
 }

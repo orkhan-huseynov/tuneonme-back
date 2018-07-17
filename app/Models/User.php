@@ -44,26 +44,26 @@ class User extends Authenticatable
 	
     function friends()
     {
-            //return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')->wherePivot('accepted', '=', 1);
-            return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id');
+        //return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')->wherePivot('accepted', '=', 1);
+        return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id');
     }
 
     function friendsAccepted()
     {
-            return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')->wherePivot('accepted', '=', 1);
+        return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')->wherePivot('accepted', '=', 1);
     }
 	
     // friendship that I started
     function friendsOfMine()
     {
-      return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')
+        return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')
              //->wherePivot('accepted', '=', 1) // to filter only accepted
              ->withPivot('accepted'); // or to fetch accepted value
     }
 
     function friendsOfMineAccepted()
     {
-      return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')
+        return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')
              ->wherePivot('accepted', '=', 1); // to filter only accepted
              //->withPivot('accepted'); // or to fetch accepted value
     }
@@ -71,14 +71,14 @@ class User extends Authenticatable
     // friendship that I was invited to 
     function friendOf()
     {
-      return $this->belongsToMany('App\Models\User', 'friends', 'friend_id', 'user_id')
+        return $this->belongsToMany('App\Models\User', 'friends', 'friend_id', 'user_id')
              //->wherePivot('accepted', '=', 1)
              ->withPivot('accepted');
     }
 
     function friendOfAccepted()
     {
-      return $this->belongsToMany('App\Models\User', 'friends', 'friend_id', 'user_id')
+        return $this->belongsToMany('App\Models\User', 'friends', 'friend_id', 'user_id')
              ->wherePivot('accepted', '=', 1)
              ->withPivot('accepted');
     }
@@ -86,24 +86,24 @@ class User extends Authenticatable
     // accessor allowing you call $user->friends
     public function getFriendsAttribute()
     {
-            if ( ! array_key_exists('friends', $this->relations)) $this->loadFriends();
+        if (!array_key_exists('friends', $this->relations)) {
+            $this->loadFriends();
+        };
 
-            return $this->getRelation('friends');
+        return $this->getRelation('friends');
     }
 
     protected function loadFriends()
     {
-            if ( ! array_key_exists('friends', $this->relations))
-            {
-                    $friends = $this->mergeFriends();
-
-                    $this->setRelation('friends', $friends);
-            }
+        if (!array_key_exists('friends', $this->relations)) {
+            $friends = $this->mergeFriends();
+            $this->setRelation('friends', $friends);
+        }
     }
 
     protected function mergeFriends()
     {
-            return $this->friendsOfMine->merge($this->friendOf);
+        return $this->friendsOfMine->merge($this->friendOf);
     }
     
     public function notifications() {
