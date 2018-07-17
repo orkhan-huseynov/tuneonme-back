@@ -1,0 +1,123 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 2, 2017, 8:35:26 PM
+    Author     : macair13
+*/
+@import url('https://fonts.googleapis.com/css?family=Rubik');
+
+html {
+    font-size: 15px;
+}
+
+body {
+    background: #e0ebeb;
+    font-family: 'Rubik', sans-serif;
+}
+
+.header__top_row {
+    padding: 10px 0;
+}
+
+.header__logo img {
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
+}
+
+.section_top__heading_main {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.section_top__heading_sub {
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.section_form {
+    margin: 10px 0 0 0;
+}
+
+.container_form {
+    max-width: 600px;   
+}
+
+.container_form .row {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.container_form__submit_btn {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+}
+
+.footer__copy {
+    text-align: center;
+    color: #777;
+}
+
+.footer__copy a {
+    color: #777;
+}
+
+.footer__copy a:hover {
+    text-decoration: none;
+}
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Small devices (tablets, 500px and up) */
+@media (min-width: 320px){
+    .header__logo img {
+        max-width: 320px;
+    }
+}
+
+/* Small devices (tablets, 500px and up) */
+@media (min-width: 375px){
+    .header__logo img {
+        max-width: 375px;
+    }
+}
+
+/* Small devices (tablets, 500px and up) */
+@media (min-width: 500px){
+    .header__logo img {
+        max-width: 500px;
+    }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px){
+    .header__logo img {
+        max-width: 500px;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px){
+    .header__logo img {
+        max-width: 500px;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px){
+    .header__logo img {
+        max-width: 500px;
+    }
+}
+

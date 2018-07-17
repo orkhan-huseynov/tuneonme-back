@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css?family=Exo');
+@import url('https://fonts.googleapis.com/css?family=Rubik');
+
+html {
+    font-size: 15px;
+    height: 100%;
+}
+
+body {
+    background: #e0ebeb;
+    font-family: 'Rubik', sans-serif;
+    height: 100%;
+}
+
+.header__top_row {
+    padding: 10px 0;
+}
+
+.header__logo img {
+    max-width: 300px;
+    margin: 0 auto;
+    display: block;
+}
+
+.section_top__heading_main {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.section_top__heading_sub {
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+.section_form {
+    margin: 10px 0 0 0;
+}
+
+.container_form {
+    max-width: 600px;   
+}
+
+.container_form .row {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.container_form__submit_btn {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+}
+
+.footer__copy {
+    text-align: center;
+    color: #777;
+}
+
+.footer__copy a {
+    color: #777;
+}
+
+.footer__copy a:hover {
+    text-decoration: none;
+}
+
+.section__coming_soon {
+    font-family: 'Exo', sans-serif;
+    height: 100%;
+}
+.section__coming_soon .container-fluid {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 50%;
+    height: 30%;
+    margin: auto;
+}
+
+.section__coming_soon p {
+    text-align: center;
+    font-size: 4rem;
+}
+
+.section__coming_soon__hl {
+    width: 100%;
+    height: 1px;
+    background: #333;
+    margin: 0 auto 10px auto;
+}
+
+.section__coming_soon__first_col {
+    margin-left: 12%;
+}
+
+.section__coming_soon__heart {
+    text-align: center;
+    margin-top: -6px;
+}
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Small devices (tablets, 500px and up) */
+@media (min-width: 320px){
+    .header__logo img {
+        max-width: 320px;
+    }
+}
+
+/* Small devices (tablets, 500px and up) */
+@media (min-width: 375px){
+    .header__logo img {
+        max-width: 375px;
+    }
+}
+
+/* Small devices (tablets, 500px and up) */
+@media (min-width: 500px){
+    .header__logo img {
+        max-width: 500px;
+    }
+    .section__coming_soon .container-fluid {
+        height: 50%;
+    }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px){
+    .header__logo img {
+        max-width: 500px;
+    }
+    .section__coming_soon .container-fluid {
+        height: 50%;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px){
+    .header__logo img {
+        max-width: 500px;
+    }
+    .section__coming_soon .container-fluid {
+        height: 30%;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px){
+    .header__logo img {
+        max-width: 500px;
+    }
+    .section__coming_soon .container-fluid {
+        height: 30%;
+    }
+}
+
