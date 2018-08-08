@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/email_exists', 'ProfileController@emailExists');
+Route::post('/profile', 'ProfileController@store');
 
 Route::group(['middleware' => ['auth:api']], function() {
     Route::post('/profile', 'ProfileController@store');
