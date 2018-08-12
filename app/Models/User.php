@@ -110,20 +110,4 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Notification');
     }
 
-    public function getNewPersonalId() {
-        $lastUsers = $this->where('active', true)->orderBy('personal_id', 'desc')->take(1)->get();
-        if ($lastUsers->count() > 0) {
-            $newPid = $this->generatePID($lastUsers->first()->personal_id);
-        } else {
-            $newPid = 'TM000001';
-        }
-
-        return $newPid;
-    }
-
-    private function generatePID($pid) {
-        $int_part = abs((integer) filter_var($pid, FILTER_SANITIZE_NUMBER_INT));
-        $int_part = str_pad(++$int_part, 6, '0', STR_PAD_LEFT);
-        return 'TM'.$int_part;
-    }
 }

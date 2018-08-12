@@ -43,7 +43,7 @@ class ProfileController extends Controller
             'name' => 'required|min:3|max:255',
             'lastname' => 'required|min:3|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'password' => 'required|min:6',
         ]);
 
 
@@ -59,11 +59,12 @@ class ProfileController extends Controller
         $user->lastname = $request->lastname;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        $user->personal_id = $this->getNewPersonalId();
 
         if ($user->save()) {
             return response()->json([
                 'responseCode' => 1,
-                'responseContent' => 'ok',
+                'responseContent' => $user->id,
             ]);
         } else {
             return response()->json([
@@ -148,6 +149,23 @@ class ProfileController extends Controller
             'responseCode' => 1,
             'responseContent' => $userFound,
         ]);
+    }
+
+    public function getNewPersonalId() {
+        $lastUsers = User::where('active', true)->orderBy('personal_id', 'desc')->take(1)->get();
+        if ($lastUsers->count() > 0) {
+            $newPid = $this->generatePID($lastUsers->first()->personal_id);
+        } else {
+            $newPid = 'TM000001';
+        }
+
+        return $newPid;
+    }
+
+    private function generatePID($pid) {
+        $int_part = abs((integer) filter_var($pid, FILTER_SANITIZE_NUMBER_INT));
+        $int_part = str_pad(++$int_part, 6, '0', STR_PAD_LEFT);
+        return 'TM'.$int_part;
     }
   
 }

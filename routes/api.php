@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/email_exists', 'ProfileController@emailExists');
 Route::post('/profile', 'ProfileController@store');
 
-Route::group(['middleware' => ['auth:api']], function() {
-    Route::post('/profile', 'ProfileController@store');
-});
+Route::get('/check-token', 'Auth\LoginController@checkToken')->middleware('auth:api');
+//Route::group(['middleware' => ['auth:api']], function() {
+//    Route::get('/check-token', 'Auth\LoginController@checkToken');
+//});
