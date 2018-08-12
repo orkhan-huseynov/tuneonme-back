@@ -21,6 +21,6 @@ Route::post('/email_exists', 'ProfileController@emailExists');
 Route::post('/profile', 'ProfileController@store');
 
 Route::get('/check-token', 'Auth\LoginController@checkToken')->middleware('auth:api');
-//Route::group(['middleware' => ['auth:api']], function() {
-//    Route::get('/check-token', 'Auth\LoginController@checkToken');
-//});
+Route::group(['middleware' => ['auth:api']], function() {
+    Route::get('/get-current-user-details', 'ProfileController@getCurrentUserDetails');
+});

@@ -50,7 +50,8 @@ class User extends Authenticatable
 
     function friendsAccepted()
     {
-        return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')->wherePivot('accepted', '=', 1);
+        return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id')
+            ->wherePivot('accepted', '=', 1);
     }
 	
     // friendship that I started

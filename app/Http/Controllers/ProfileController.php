@@ -88,6 +88,41 @@ class ProfileController extends Controller
 	    return view('profile')->with(['user' => $user, 'levels_completed' => $levels_completed, 'levels_won' => $levels_won]);
     }
 
+    public function getCurrentUserDetails()
+    {
+        $user = Auth::user();
+        $hasActiveConnections = ($user->friends->count() > 0 && ($user->friendsOfMineAccepted->count() > 0 || $user->friendsOfAccepted->count > 0));
+        $friend_user = null;
+
+        if ($hasActiveConnections) {
+            $friend_user = ($user->friendsOfMineAccepted->count() > 0) ? $user->friendsOfMineAccepted->first() : $user->friendOfAccepted->first();
+            $friend_user = [
+                'id' => $friend_user->id,
+                'name' => $friend_user->name,
+                'surname' => $friend_user->surname,
+                'lastname' => $friend_user->lastname,
+                'email' => $friend_user->email,
+                'personal_id' => $friend_user->personal_id,
+                'profile_picture' => $friend_user->personal_id,
+            ];
+        }
+
+        return response()->json([
+            'responseCode' => '1',
+            'responseContent' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'surname' => $user->surname,
+                'lastname' => $user->lastname,
+                'email' => $user->email,
+                'personal_id' => $user->personal_id,
+                'profile_picture' => $user->profile_picture,
+                'has_active_connections' => $hasActiveConnections,
+                'friend' => $friend_user,
+            ],
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
