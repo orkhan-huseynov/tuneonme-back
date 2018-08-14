@@ -102,22 +102,24 @@ class ProfileController extends Controller
                 'surname' => $friend_user->surname,
                 'lastname' => $friend_user->lastname,
                 'email' => $friend_user->email,
-                'personal_id' => $friend_user->personal_id,
-                'profile_picture' => $friend_user->personal_id,
+                'personalId' => $friend_user->personal_id,
+                'profilePicture' => $friend_user->personal_id,
+                'memberSince' => $friend_user->created_at->timestamp,
             ];
         }
 
         return response()->json([
-            'responseCode' => '1',
+            'responseCode' => 1,
             'responseContent' => [
                 'id' => $user->id,
                 'name' => $user->name,
                 'surname' => $user->surname,
                 'lastname' => $user->lastname,
                 'email' => $user->email,
-                'personal_id' => $user->personal_id,
-                'profile_picture' => $user->profile_picture,
-                'has_active_connections' => $hasActiveConnections,
+                'personalId' => $user->personal_id,
+                'profilePicture' => $user->profile_picture,
+                'memberSince' => $user->created_at->timestamp,
+                'hasActiveConnections' => $hasActiveConnections,
                 'friend' => $friend_user,
             ],
         ]);
