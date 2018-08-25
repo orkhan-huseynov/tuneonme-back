@@ -274,5 +274,19 @@ class ProfileController extends Controller
         $int_part = str_pad(++$int_part, 6, '0', STR_PAD_LEFT);
         return 'TM'.$int_part;
     }
+
+    public function getLevelsStats() {
+        $user = Auth::user();
+        $total_levels = UserLevel::where('user_id', $user->id)->where('completed', true)->count();
+        $levels_won = UserLevel::where('user_id', $user->id)->where('won_user_id', $user->id)->count();
+
+        return response()->json([
+            'responseCode' => 1,
+            'responseContent' => [
+                'totalLevels' => $total_levels,
+                'levelsWon' => $levels_won,
+            ]
+        ]);
+    }
   
 }
