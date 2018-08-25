@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserLevel;
 use Auth;
+use Illuminate\Support\Facades\Input;
 use Image;
 use Validator;
 
@@ -163,17 +164,64 @@ class ProfileController extends Controller
     {
         $current_user = Auth::user();
         
-        if ($request->hasFile('userpic')) {
-            $filename  = time() . '.' . $request->userpic->getClientOriginalExtension();
-            //$path = public_path('images/'.$filename);
-            $path = '/var/www/html/tuneon.me/public_html/storage/app/public/images/'.$filename;
-            Image::make($request->userpic->getRealPath())->resize(500, null, function ($constraint) {
+        if ($request->hasFile('profilePicture')) {
+            $filename  = time() . '.' . $request->profilePicture->getClientOriginalExtension();
+            //$path = '/var/www/html/tuneon.me/public_html/storage/app/public/images/'.$filename;
+            $path = storage_path('app/public/images') . $filename;
+
+            Image::make($request->profilePicture->getRealPath())->resize(500, null, function ($constraint) {
                 $constraint->aspectRatio();
             })->save($path);
-            //$path = $request->userpic->store('images', 'public');
+
             $current_user->profile_picture = $filename;
-            $current_user->save();
-            return response()->json(['status' => 'ok'], 200);
+            if ($current_user->save()) {
+                return response()->json([
+                    'responseCode' => 1,
+                    'responseContent' => $filename,
+                ], 200);
+            } else {
+                return response()->json([
+                    'responseCode' => 2,
+                    'responseContent' => 'Could not save this picture',
+                ], 200);
+            }
+        } else {
+            return response()->json([
+               'responseCode' => 2,
+               'responseContent' => 'No file was provided',
+            ], 200);
+        }
+    }
+
+    public function saveProfileNameLastname(Request $request)
+    {
+        $current_user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|min:3|max:255',
+            'lastname' => 'required|min:3|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'responseCode' => 2,
+                'responseContent' => 'Validation error',
+            ]);
+        }
+
+        $current_user->name = $request->name;
+        $current_user->lastname = $request->lastname;
+
+        if ($current_user->save()) {
+            return response()->json([
+                'responseCode' => 1,
+                'responseContent' => 'ok',
+            ]);
+        } else {
+            return response()->json([
+                'responseCode' => 2,
+                'responseContent' => 'Saving error',
+            ]);
         }
     }
 

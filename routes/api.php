@@ -23,4 +23,8 @@ Route::post('/profile', 'ProfileController@store');
 Route::get('/check-token', 'Auth\LoginController@checkToken')->middleware('auth:api');
 Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/get-current-user-details', 'ProfileController@getCurrentUserDetails');
+
+    // Profile
+    Route::post('/store-profile-picture', 'ProfileController@save_profile_pic');
+    Route::put('/save-profile-name-lastname', 'ProfileController@saveProfileNameLastname');
 });
