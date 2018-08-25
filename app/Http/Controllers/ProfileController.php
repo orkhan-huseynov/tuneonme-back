@@ -92,7 +92,12 @@ class ProfileController extends Controller
     public function getCurrentUserDetails()
     {
         $user = Auth::user();
-        $hasActiveConnections = ($user->friends->count() > 0 && ($user->friendsOfMineAccepted->count() > 0 || $user->friendsOfAccepted->count > 0));
+
+        $hasActiveConnections = false;
+        if ($user->friendsOfAccepted != null) {
+            $hasActiveConnections = ($user->friends->count() > 0 && ($user->friendsOfMineAccepted->count() > 0 || $user->friendsOfAccepted->count() > 0));
+        }
+
         $friend_user = null;
 
         if ($hasActiveConnections) {
@@ -167,7 +172,7 @@ class ProfileController extends Controller
         if ($request->hasFile('profilePicture')) {
             $filename  = time() . '.' . $request->profilePicture->getClientOriginalExtension();
             //$path = '/var/www/html/tuneon.me/public_html/storage/app/public/images/'.$filename;
-            $path = storage_path('app/public/images') . $filename;
+            $path = storage_path('app/public/images/') . $filename;
 
             Image::make($request->profilePicture->getRealPath())->resize(500, null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -233,6 +238,23 @@ class ProfileController extends Controller
         return response()->json([
             'responseCode' => 1,
             'responseContent' => $userFound,
+        ]);
+    }
+
+    public function logoutApi()
+    {
+        if (Auth::check()) {
+            Auth::user()->AauthAcessToken()->delete();
+
+            return response()->json([
+                'responseCode' => 1,
+                'responseContent' => 'ok',
+            ]);
+        }
+
+        return response()->json([
+            'responseCode' => 2,
+            'responseContent' => 'Logout error',
         ]);
     }
 

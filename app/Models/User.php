@@ -111,4 +111,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Notification');
     }
 
+    public function AauthAcessToken(){
+        return $this->hasMany('App\Models\OauthAccessToken');
+    }
+
 }
