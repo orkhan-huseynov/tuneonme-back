@@ -31,4 +31,5 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::post('/store-profile-picture', 'ProfileController@save_profile_pic');
     Route::put('/save-profile-name-lastname', 'ProfileController@saveProfileNameLastname');
     Route::get('/get-levels-stats', 'ProfileController@getLevelsStats');
+    Route::get('/get-search-suggestions/{searchString}', 'ProfileController@getSearchSuggestions');
 });

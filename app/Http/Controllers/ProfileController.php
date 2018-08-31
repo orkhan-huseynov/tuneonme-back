@@ -288,5 +288,41 @@ class ProfileController extends Controller
             ]
         ]);
     }
+
+    public function getSearchSuggestions($searchString) {
+        $searchString = filter_var($searchString, FILTER_SANITIZE_STRING);
+
+        $searchStringArr = explode(' ', $searchString);
+
+        $foundProfiles = [];
+
+        foreach ($searchStringArr as $searchString) {
+            $foundProfiles = array_merge($foundProfiles, $this->findProfilesBySearchString($searchString));
+        }
+
+        $foundProfilesToReturn = [];
+        foreach ($foundProfiles as $foundProfile) {
+            array_push($foundProfilesToReturn, [
+                'id' => $foundProfile['id'],
+                'name' => $foundProfile['name'],
+                'lastname' => $foundProfile['lastname'],
+                'profilePicture' => $foundProfile['profile_picture'],
+            ]);
+        }
+
+        return response()->json([
+            'responseCode' => 1,
+            'responseContent' => [
+                'profiles' => $foundProfilesToReturn,
+            ]
+        ]);
+    }
+
+    private function findProfilesBySearchString($searchString) {
+        return User::where('name', 'LIKE', '%'.$searchString.'%')
+                                ->orWhere('lastname', 'LIKE', '%'.$searchString.'%')
+                                ->orWhere('personal_id', 'LIKE', '%'.$searchString.'%')
+                                ->get()->toArray();
+    }
   
 }
