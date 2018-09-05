@@ -455,4 +455,24 @@ class LevelController extends Controller
 		return redirect('/level/'.$level_id);
 	}
 
+	public function getLevels() {
+        $current_user_id = Auth::user()->id;
+        $current_user_pid = Auth::user()->personal_id;
+
+        $friends = Auth::user()->friendsAccepted();
+        if ($friends->count() == 0) {
+            $friends = Auth::user()->friendOfAccepted();
+        }
+
+        if ($friends->count() > 0) {
+            $levels = Level::where('user_id', $current_user_id)->orWhere('user_id', $friends->first()->id)->get();
+            $friend_id = $friends->first()->id;
+        } else {
+            $levels = Level::where('user_id', $current_user_id)->orWhere('is_default', '=', true)->get();
+            $friend_id = 0;
+        }
+
+        return response()->json(['responseCode' => 1, 'responseContent' => $levels]);
+    }
+
 }
