@@ -32,4 +32,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::put('/save-profile-name-lastname', 'ProfileController@saveProfileNameLastname');
     Route::get('/get-levels-stats', 'ProfileController@getLevelsStats');
     Route::get('/get-search-suggestions/{searchString}', 'ProfileController@getSearchSuggestions');
+
+    //Levels
+    Route::get('/get-levels', 'LevelController@getLevels');
 });
